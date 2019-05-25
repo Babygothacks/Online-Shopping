@@ -10,15 +10,21 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<javaee.version>8.0</javaee.version>
-		<spring.version>5.1.5.RELEASE</spring.version>
+		<spring.version>5.1.7.RELEASE</spring.version>
 	</properties>
 	<dependencies>
+		<!-- Linking backend project -->
+		<dependency>
+			<groupId>net.Ganesh</groupId>
+			<artifactId>shoppingbackend</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- javaee api -->
 		<!-- https://mvnrepository.com/artifact/javax/javaee-api -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>${javaee.version}</version>
+			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- junit -->
@@ -32,9 +38,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
+			<version>5.1.6.RELEASE</version>
 		</dependency>
-
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 
 	</dependencies>
 	<build>
@@ -43,7 +53,7 @@
 			<plugin>
 				<!-- change java target version -->
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
