@@ -6,9 +6,9 @@ import net.Ganesh.shoppingbackend.dto.Category;
 
 public interface CategoryDAO {
 
-	
-	boolean addCategory(Category category);
-	List<Category> list();
 	Category getCategory(int id);
-	
+	List<Category> list();	
+	boolean addCategory(Category category);
+	boolean updateCategory(Category category);
+	boolean deleteCategory(Category category);
 }

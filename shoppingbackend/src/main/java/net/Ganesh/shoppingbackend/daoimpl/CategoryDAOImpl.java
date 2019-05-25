@@ -1,9 +1,9 @@
 package net.Ganesh.shoppingbackend.daoimpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,58 +12,38 @@ import net.Ganesh.shoppingbackend.dao.CategoryDAO;
 import net.Ganesh.shoppingbackend.dto.Category;
 
 @Repository("categories")
+@Transactional
 public class CategoryDAOImpl implements CategoryDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	private static List<Category> categories = new ArrayList<>();
-
-	static {
-		Category category = new Category();
-		// First category
-		category.setId(1);
-		category.setName("Television");
-		category.setDescription("This is some television description");
-		category.setImageURL("CAT_1.png");
-		categories.add(category);
-
-		// second category
-		category = new Category();
-		category.setId(2);
-		category.setName("Mobile");
-		category.setDescription("This is some Mobile description");
-		category.setImageURL("CAT_2.png");
-		categories.add(category);
-
-		// third category
-		category = new Category();
-		category.setId(3);
-		category.setName("Laptop");
-		category.setDescription("This is some Laptop description");
-		category.setImageURL("CAT_3.png");
-		categories.add(category);
-	}
 
 	@Override
 	public List<Category> list() {
-		// TODO Auto-generated method stub
-		return categories;
+		//Hibernate query language - Category,active in below is Entity not from database
+		String getActiveCategory = "FROM Category WHERE active = :_param_active";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(getActiveCategory);
+		
+		query.setParameter("_param_active", true);
+		
+		return query.getResultList();
 	}
-
+/*
+ * (non-Javadoc)
+ * @see net.Ganesh.shoppingbackend.dao.CategoryDAO#getCategory(int)
+ * 
+ * getting single category based on id
+ */
 	@Override
 	public Category getCategory(int id) {
 
-		for (Category category : categories) {
-			if (category.getId() == id)
-				return category;
-		}
-
-		return null;
+		return sessionFactory.getCurrentSession().get(Category.class, Integer.valueOf(id));
 	}
 
 	@Override
-	@Transactional
+	
 	public boolean addCategory(Category category) {
 
 		try {
@@ -74,6 +54,29 @@ public class CategoryDAOImpl implements CategoryDAO {
 			return false;
 		}
 
+	}
+
+	@Override
+	public boolean updateCategory(Category category) {
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(category);
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteCategory(Category category) {
+		category.setActive(false);
+		try {
+			sessionFactory.getCurrentSession().update(category);
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 }
