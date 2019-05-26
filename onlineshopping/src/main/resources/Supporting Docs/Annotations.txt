@@ -11,4 +11,9 @@ field annotations (private int id;) mapping database column and Entity fields
 @GeneratedValue(strategy = GenerationType.IDENTITY) - database has column with Identity property
 
 @Column(name = "image_url")  -- if column name in DB is different from field name(java naming convension), In DB column name is (image_url), but in field has(imageURL)
-private String imageURL;
+private String imageURL; 
+
+@ResponseBody - to conver all the response as json
+
+@JsonIgnore - ignores while binding as json
+private String description;
