@@ -1,0 +1,14 @@
+
+Annotations
+@Entity
+@Autowired
+@Repository("categories")
+@Transactional
+@Override
+field annotations (private int id;) mapping database column and Entity fields
+@Id - marking this field as identity in entity 
+@GeneratedValue
+@GeneratedValue(strategy = GenerationType.IDENTITY) - database has column with Identity property
+
+@Column(name = "image_url")  -- if column name in DB is different from field name(java naming convension), In DB column name is (image_url), but in field has(imageURL)
+private String imageURL;

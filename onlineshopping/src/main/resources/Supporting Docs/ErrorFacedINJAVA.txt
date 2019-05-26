@@ -492,22 +492,15 @@ Generate toString method to check the values.
 
 
 ---------------------------------------------------------------------------------------------------------------------------------
+Part 4 - products
+
+Jquery dataTable plugins
 
 
 
-Annotations
-@Entity
-@Autowired
-@Repository("categories")
-@Transactional
-@Override
-field annotations (private int id;) mapping database column and Entity fields
-@Id
-@GeneratedValue
-@GeneratedValue(strategy = GenerationType.IDENTITY) - database has column with Identity property
+---------------------------------------------------------------------------------------------------------------------------------
 
-@Column(name = "image_url")  -- if column name in DB is different from field name, In DB column name is (image_url), but in field has(imageURL)
-private String imageURL;
+
 
 
 

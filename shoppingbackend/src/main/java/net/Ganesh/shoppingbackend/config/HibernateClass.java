@@ -30,7 +30,7 @@ public class HibernateClass {
 	 * private final static String DATABASE_URL =
 	 * "jdbc:mysql://127.0.0.1:3306/trashbox"; private final static String
 	 * DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver"; private final static String
-	 * DATABASE_DIALECT = "org.hibernate.dialect.H2Dialect"; private final static
+	 * DATABASE_DIALECT = "org.hibernate.dialect.org.hibernate.dialect.MySQLDialect"; private final static
 	 * String DATABASE_USERNAME = "Pravin"; private final static String
 	 * DATABASE_PSWD = "Sql(0nn3)t!*78";
 	 */

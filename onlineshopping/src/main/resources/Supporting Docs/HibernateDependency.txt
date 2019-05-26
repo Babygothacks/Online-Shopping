@@ -176,7 +176,7 @@ DATABASE_USERNAME
 DATABASE_PSWD
 
 ----------------------------------------------------
-DATABASE_DIALECT ="org.hibernate.dialect.H2Dialect";
+
 DATABASE_USERNAME ="your username";
 DATABASE_PSWD ="your password";
 ----------------------------------------------------
@@ -185,7 +185,7 @@ DATABASE_PSWD ="your password";
 --------------
 DATABASE_URL = jdbc:h2:tcp://localhost/~/databasename
 DATABASE_DRIVER = org.h2.Driver
-
+DATABASE_DIALECT = org.hibernate.dialect.H2Dialect
 
 
 2. MySQL Connector/J -> 8.0.15
@@ -193,6 +193,7 @@ DATABASE_DRIVER = org.h2.Driver
 
 DATABASE_URL = jdbc:mysql://127.0.0.1:3306/databasename
 DATABASE_DRIVER = com.mysql.cj.jdbc.Driver
+DATABASE_DIALECT = org.hibernate.dialect.MySQLDialect
 
 3. Oracle JDBC Driver
 ---------------------
