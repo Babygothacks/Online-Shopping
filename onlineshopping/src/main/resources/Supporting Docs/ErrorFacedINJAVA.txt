@@ -1,0 +1,515 @@
+//Author - Ganesh
+
+Issues faced
+
+1. Cloning Git repo in eclipse
+
+Error : eclipse clone git repository ssh error
+
+It sounds like Egit is looking for an ssl certificate and refusing to function without it. A good fix to make the problem go away and stay away: Window ->Preferences -> Team -> Git -> Configuration -> New Entry -> http.sslverify=false.
+
+That should take care of it.
+-------------------------------------------------------------------
+
+2 creating maven project
+
+Error : Could not resolve archetype
+
+org.apache.maven.archetype-webapp:RELEASE from any of the configured repositories.
+
+Steps are provided below:
+
+Open Window > Preferences
+Open Maven > Archetypes
+Click 'Add Remote Catalog' and add the following:
+Catalog File: http://repo1.maven.org/maven2/archetype-catalog.xml
+Description: maven catalog
+
+or 
+
+Maven plugin uses a settings file where the configuration can be set. Its path is available in Eclipse at Window|Preferences|Maven|User Settings. If the file doesn't exist, create it and put on something like this:
+
+
+Maven plugin uses a settings file where the configuration can be set. Its path is available in Eclipse at Window|Preferences|Maven|User Settings. If the file doesn't exist, create it and put on something like this:
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <localRepository/>
+  <interactiveMode/>
+  <usePluginRegistry/>
+  <offline/>
+  <pluginGroups/>
+  <servers/>
+  <mirrors/>
+  <proxies>
+    <proxy>
+      <id>myproxy</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>192.168.1.100</host>
+      <port>6666</port>
+      <username></username>
+      <password></password>
+      <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
+    </proxy>
+  </proxies>
+  <profiles/>
+  <activeProfiles/>
+</settings>
+-------------------------------------
+
+server tomcat v7 0 server at localhost 2 failed to start eclipse juno
+
+Solution 1:
+
+1-Go to your workspace directory » .metadata » .plugins » org.eclipse.core.resources folder.
+
+2- Delete the .snap file.
+
+3- Restart your Eclipse IDE.
+
+Solution 2:
+
+1- Open the Servers tab from Windows » Show View » Servers menu.
+
+2- Right click on the server and delete it
+
+3-Create a new server by going New » Server on server tab.
+
+4-Click on Configure runtime environments link.
+
+5-Select the Apache Tomcat Server and remove it. This will remove the Tomcat server configuration.
+
+6-Click on OK and exit the screen above now.
+
+7-From the screen below, choose Apache Tomcat server and click on Next button:
+
+8-Browse to Tomcat Installation Directory.
+
+9-Click on Next and choose which project you would like to deploy:
+
+10-Click on Finish after adding your project.
+
+11-Now launch your Server.
+
+Solution 3:
+
+1-Go to your workspace directory » .metadata » .plugins » org.eclipse.wst.server.core folder.
+
+2- Delete the tmp folder.
+
+3- Restart your Eclipse IDE
+
+Note: If the problem still persists, you can terminate the PORT in Windows by the following command:
+1: netstat -ano | findstr :<YOUR_PORT_NUMBER>
+
+C:\Windows\system32>netstat -ano | findstr :8080
+	TCP	 0.0.0.0:8080	0.0.0.0:0	LISTENING	3740 <- PID
+	TCP	 [::]:8080	    [::]:0	    LISTENING	3740
+2: taskkill /PID <PID_OF_YOUR_PORT> /F
+
+C:\Windows\system32>taskkill /PID 3740 /F
+SUCCESS: The process with PID 3740 has been terminated.
+To ensure that whether it is terminated or not run the first command again. You will get an empty line if the process is successfully ended.
+
+
+-------------------------------------------------------------------------------------------
+project facet dynamic web module version 4.0 is not supported
+
+Edit <project_location>\.settings\org.eclipse.wst.common.project.facet.core.xml and change the jst.web property to 3.1.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <fixed facet="wst.jsdt.web"/>
+  <installed facet="jst.web" version="2.3"/>
+  <installed facet="wst.jsdt.web" version="1.0"/>
+  <installed facet="java" version="1.8"/>
+</faceted-project>
+
+
+-----------------------------------------------------------------------------------------------
+2.3.3 JSTL dependency - POM.xml
+
+jstl is used have tag prefix in jsp page
+
+
+<dependency>
+	<groupId>jstl</groupId>
+	<artifactId>jstl</artifactId>
+	<version>1.2</version>
+</dependency>
+
+
+In JSP file page.jsp add below line before header starts
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
+
+<html>
+<body> ${contextRoot} says   ${greeting}
+</body>
+</html>
+
+
+
+-----------------------------------------------------------------------------------------------
+2.4 @PathVariable and @RequestParam
+
+2.4.1 @RequestParam - query string (transfer data from URL eg. www.example.com?greet=hello)
+
+Page Controller
+
+1. Mandatory Query string
+
+	@RequestMapping(value = "/test")
+	public ModelAndView test(@RequestParam("greet") String greeting) {
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("greeting", greeting);
+		return mv;
+	}
+
+2.Optional Query string :  @RequestParam(value= "greet",required=false)
+
+	@RequestMapping(value = "/test")
+	public ModelAndView test(@RequestParam(value= "greet",required=false) String greeting) {
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("greeting", greeting);
+		return mv;
+	}
+
+URL : http://localhost:8080/onlineshopping/test?greet=working
+jsp o/p: /onlineshopping says working 
+
+
+2.4.2 @PathVariable - Make more friendly and clean URL : Get data from URL path itself.
+
+Steps 
+@RequestMapping(value = "/test/{greet}")
+@PathVariable("greet") String greeting
+
+
+	@RequestMapping(value = "/test/{greet}")
+	public ModelAndView test(@PathVariable("greet") String greeting) {
+
+		if (greeting == null)
+			greeting = "Hello there";
+
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("greeting", greeting);
+		return mv;
+	}
+URL : http://localhost:8080/onlineshopping/test/Welcome Hello world
+-----------------------------------------------------------------------------------------------
+2.5 Creating Landing page and loading static content
+
+2.5.1 create an new folder inside webapp -> assets
+2.5.2 goto url https://getbootstrap.com/ and then click download or
+	https://getbootstrap.com/docs/4.3/getting-started/download/ download it from here
+2.5.3 copy css,font & js to asset folder in our project
+2.5.4 search for unstyled starter templates bootstrap, or download it from http://www.oswt.co.uk/startbootstrap/templates/shop-homepage.html
+2.5.5 copy js and css and html content from that site
+2.5.6 Add mvc namespace in the Dispatcher-servlet.xml
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<context:component-scan
+		base-package="net.Ganesh.onlineshopping.controller" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- Loading static Resource -->
+	<mvc:annotation-driven/>
+	<mvc:resources location="/assets/" mapping="/resources/**"/>
+</beans>
+
+2.5.7 Add spring url lib tag in jsp file
+
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<spring:url var="css" value="/resources/css" />
+<spring:url var="images" value="/resources/images" />
+<spring:url var="js" value="/resources/js" />
+
+2.5.8 replace common path for css,js& image with newly created ${css},${js},${images}
+
+
+------------------------------------------------------------------------------------------------------
+
+2.6 Creating Master page
+
+2.6.1 Create a shared folder inside view folder and create a file and name it as navbar.jsp and move some content of main page to here
+2.6.2 In main page <%@include file="./shared/navbar.jsp"%> this is refer
+2.6.3 click based rendering partial views
+
+------------------------------------------------------------------------------------------------------
+
+3.Connecting Backend with frontend
+
+
+DTO - Data Transfer Object
+
+DAO- Data Access Object
+
+Relationship
+
+1 to many
+category ------> product-------->
+
+Many to 1
+product-------->user(supplier, admin, customer)
+
+
+Many to 1
+Address --------> user(supplier, admin, customer)
+
+
+1 to 1
+
+cart -----------> user
+
+many to 1
+cartitem --------> cart
+
+
+1 to 1
+
+cartitem ---------> product
+
+many to 1
+order---------> user
+
+1 to many
+order ------------> order item
+
+
+1 to 1
+order item -------->  product
+
+
+
+3.2 category , 
+
+3.3 Linking backend and front end
+
+3.3.1 - Add backend project Grp id, Artifact id dependency from backend pom.xml to onlineshopping pom.xml
+
+IN Onlineshopping pom.xml
+
+<dependency>
+	<groupId>net.Ganesh</groupId>
+	<artifactId>shoppingbackend</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+</dependency>
+
+
+3.3.2 -Page controller -  dependency injection - Autowired to implement DAO interface
+
+@Autowired
+private CategoryDAO categories;
+
+@Repository("categories") -  providing access to data managed by spring framework
+
+
+<%@include file="./shared/sidebar.jsp" %>
+
+
+
+3.3.3 Unsatisfied Dependency Exception : Error creating bean with name 'pageController' - giving reference to backend project in dispacther sevlet as w
+ell
+In dispatcher-servlet 
+
+<context:component-scan
+		base-package="net.Ganesh.shoppingbackend.daoimpl" />
+
+3.3.4 Updating URL to access dynamic page
+
+-----------------------------------------------------------------------------
+3.4 configuring H2 database & Hibernate dependency
+
+3.4.1 configuring h2 database
+
+	open url http://www.h2database.com/
+
+	Download All platform link & save it in new location
+	
+	goto bin directory and it has h2 jar file. execute it. H2 database engine will be started.
+	
+	Link will be opened in browser :saved setting and setting name should be Generic H2(server)
+
+	Server :Generic H2(server)
+	Driver class : org.h2.Driver
+	JDBC URL : jdbc:h2:tcp://localhost/~/onlineshopping
+	Username :sa
+	Password :H2c0nn3ct@!56
+
+---------------------------------------------------------------------------------------------
+
+Adding dependency to connect database
+
+In shopping backend project POM.xml - > add dependency
+<dependency>
+	<groupId>com.h2database</groupId>
+	<artifactId>h2</artifactId>
+	<version>1.4.197</version>cy
+</dependency>
+
+Hibernate - its is used as ORM for converting object to database model.
+
+<!-- Hibernate  dependency -->
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.7.Final</version>
+		</dependency>
+
+Add ing Spring ORM dependency
+		
+		<!-- Spring ORM -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>5.1.7.RELEASE</version>
+		</dependency>
+
+connection pooling dependency - it will automatically make database connection
+
+<!-- Database Connection pooling -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+
+---------------------------------------------------------------------------------------------
+
+Hibernate configuration with h2 database
+
+Step 1
+Create a new package called config and create a new class called HibernateConfig
+
+Step 2
+Create 3 annotations for that class
+
+@Configuration
+@ComponentScan(basePackages= {"net.Ganesh.shoppingbackend.dto"})
+@EnableTransactionManagement
+
+Step 3
+Create 5 static final variable to provide database related info
+
+	private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/onlineshopping";
+	private final static String DATABASE_DRIVER ="org.h2.driver";
+	private final static String DATABASE_DIALECT ="org.hibernate.dialect.H2Dialect";
+	private final static String DATABASE_USERNAME ="sa";
+	private final static String DATABASE_PSWD ="H2c0nn3ct@!56";
+
+Step 4
+Create 3 beans
+
+Bean 1 : DataSource - providing connection information of the database
+Bean 2 : Session Factory - post Db connection & configures appln to use Hibernate & create session object
+Bean 3 : HibernateTransactionManager - based on created session manages transaction
+
+Datasource Bean
+
+	@Bean
+	private DataSource getDataSource()
+	{		
+		BasicDataSource dataSource = new BasicDataSource();		
+		dataSource.setDriverClassName(DATABASE_DRIVER);
+		dataSource.setUrl(DATABASE_URL);
+		dataSource.setUsername(DATABASE_USERNAME);
+		dataSource.setPassword(DATABASE_PSWD);			
+		return dataSource;		
+	}
+
+Session factory bean
+
+	//Session factory bean
+	@Bean
+	public SessionFactory getSessionFactory(DataSource dataSource) {
+		
+		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(dataSource);
+		builder.addProperties(getHibernateProperties());
+		builder.scanPackages("net.Ganesh.shoppingbackend.dto");
+		return builder.buildSessionFactory();
+		
+	}
+	private Properties getHibernateProperties() {
+		
+		Properties properties = new Properties();
+		properties.put("hibernate.dialect", DATABASE_DIALECT);
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.format_sql", "true");	
+		return properties;
+	}
+
+Transaction Manager bean
+	@Bean
+	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory)
+	{
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+		
+		return transactionManager;
+		
+	}
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+3.6 Creating Entity class and tables in database
+
+Creating tables in database
+
+create a new file in shopping backend project and name it as databaseQueries.sql
+
+Generate toString method to check the values.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+3.8 Modify DAO impl class to add new category to database using hibernate
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Annotations
+@Entity
+@Autowired
+@Repository("categories")
+@Transactional
+@Override
+field annotations (private int id;) mapping database column and Entity fields
+@Id
+@GeneratedValue
+@GeneratedValue(strategy = GenerationType.IDENTITY) - database has column with Identity property
+
+@Column(name = "image_url")  -- if column name in DB is different from field name, In DB column name is (image_url), but in field has(imageURL)
+private String imageURL;
+
+
+
+
+

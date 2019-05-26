@@ -1,0 +1,282 @@
+// Author - Ganesh
+Hibernate and connecting database 1DD, 3HD, 3A, 5V, 3B
+
+make sure spring dependency, javaee, junit are available in POM.xml 
+
+Change java version 
+
+<build>
+   <plugins>
+      <plugin>
+         <!-- change java target version -->
+         <artifactId>maven-compiler-plugin</artifactId>
+         <version>3.1</version>
+         <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+         </configuration>
+      </plugin>
+   </plugins>
+</build>
+-------------------------------------------------------------------------------------------------------------
+1 Database dependency in POM.xml
+
+
+3 Hibernate dependencies in POM.xml
+
+1. Hibernate
+2. Spring ORM
+3. Connection Pooling
+
+
+Create a Hibernate package and a class, Inside that class
+
+3 annotations in class level
+
+1. @Configuration
+2. @ComponentScan(basePackages= {"Grpid.artifactid.packagenametoScan"})
+3. @EnableTransactionManagement
+
+
+5 variable
+
+1. private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/onlineshopping";
+2. private final static String DATABASE_DRIVER ="org.h2.driver";
+3. private final static String DATABASE_DIALECT ="org.hibernate.dialect.H2Dialect";
+4. private final static String DATABASE_USERNAME ="sa";
+5. private final static String DATABASE_PSWD ="H2c0nn3ct@!56";
+
+
+3 Beans
+
+Create 3 beans
+
+Bean 1 : DataSource - providing connection information of the database
+Bean 2 : Session Factory - post Db connection & configures appln to use Hibernate & create session object
+Bean 3 : HibernateTransactionManager - based on created session manages transaction
+
+
+----------------------------------------------------------------------------------------------
+
+1. Database dependency in POM.xml
+
+H2 database
+-----------
+<dependency>
+	<groupId>com.h2database</groupId>
+	<artifactId>h2</artifactId>
+	<version>1.4.197</version>cy
+</dependency>
+
+
+MySQL Connector/J -> 8.0.15
+---------------------------
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.15</version>
+</dependency>
+
+Oracle JDBC Driver
+-----------------
+<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+<dependency>
+    <groupId>com.oracle</groupId>
+    <artifactId>ojdbc14</artifactId>
+    <version>10.2.0.4.0</version>
+</dependency>
+
+
+sql server
+----------
+<!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4 -->
+<dependency>
+    <groupId>com.microsoft.sqlserver</groupId>
+    <artifactId>sqljdbc4</artifactId>
+    <version>4.0</version>
+    <scope>test</scope>
+</dependency>
+
+
+no sql - Mongo DB
+-----------------
+
+<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongo-java-driver</artifactId>
+    <version>3.10.1</version>
+</dependency>
+
+
+Spring Data MongoDB Core » 2.1.8.RELEASE
+----------------------------------------
+<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-mongodb</artifactId>
+    <version>2.1.8.RELEASE</version>
+</dependency>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+2. Three Hibernate dependencies in POM.xml
+
+1. Hibernate
+------------
+<!-- Hibernate  dependency -->
+
+<dependency>
+     <groupId>org.hibernate</groupId>
+     <artifactId>hibernate-core</artifactId>
+     <version>5.2.7.Final</version>
+</dependency>
+
+2. Spring ORM
+-------------
+<!-- Spring ORM -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-orm</artifactId>
+    <version>5.1.7.RELEASE</version>
+</dependency>
+
+
+3. Connection Pooling - commons dbcp2 make DB connection automatically
+---------------------
+<!-- Database Connection pooling -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-dbcp2</artifactId>
+    <version>2.1.1</version>
+</dependency>
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Three annotations
+
+Create a new package and a new class for Hibernate and make 3 annotations for db transaction
+
+Class level annotation declaration
+
+1. @Configuration
+2. @ComponentScan(basePackages= {"Grpid.artifactid.packagenametoScan"})
+3. @EnableTransactionManagement
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Five variables - used for database connection.
+
+DATABASE_URL
+DATABASE_DRIVER 
+DATABASE_DIALECT 
+DATABASE_USERNAME
+DATABASE_PSWD
+
+----------------------------------------------------
+DATABASE_DIALECT ="org.hibernate.dialect.H2Dialect";
+DATABASE_USERNAME ="your username";
+DATABASE_PSWD ="your password";
+----------------------------------------------------
+
+1. H2 database
+--------------
+DATABASE_URL = jdbc:h2:tcp://localhost/~/databasename
+DATABASE_DRIVER = org.h2.Driver
+
+
+
+2. MySQL Connector/J -> 8.0.15
+---------------------------
+
+DATABASE_URL = jdbc:mysql://127.0.0.1:3306/databasename
+DATABASE_DRIVER = com.mysql.cj.jdbc.Driver
+
+3. Oracle JDBC Driver
+---------------------
+reference : https://docs.oracle.com/cd/E11882_01/appdev.112/e13995/oracle/jdbc/OracleDriver.html
+
+DATABASE_URL = jdbc:oracle:<drivertype>:@databasename
+DATABASE_DRIVER = oracle.jdbc.OracleDriver
+
+divert type : thin, oci8,kprb
+
+4. sql server
+----------
+DATABASE_URL = jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]
+DATABASE_DRIVER = com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+eg 1: jdbc:sqlserver://localhost;user=MyUserName;password=*****;
+eg 2: jdbc:sqlserver://localhost:8080;user=MyUserName;password=*****;
+
+5. no sql - MongoDB
+-----------------
+
+DATABASE_URL = jdbc:mongo://<\serverName>/<\databaseName>
+DATABASE_DRIVER = mongodb.jdbc.MongoDriver
+
+e.g. url="jdbc:mongo://ds029847.mongolab.com:29847/tpch";
+
+
+6. Spring Data MongoDB Core » 2.1.8.RELEASE
+----------------------------------------
+DATABASE_URL = 
+DATABASE_DRIVER = spring.datasource.driver-class-name=mongodb.jdbc.MongoDriver
+
+
+spring.data.mongodb.host=127.0.0.1
+spring.data.mongodb.database= dbname
+spring.datasource.driver-class-name=mongodb.jdbc.MongoDriver
+spring.data.mongodb.port= 8080
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+5. Create 3 beans
+
+Bean 1 : DataSource - providing connection information of the database
+----------------------------------------------------------------------
+@Bean
+public DataSource getDataSource()
+{		
+   //providing Database connection information
+   BasicDataSource dataSource = new BasicDataSource();		
+   dataSource.setDriverClassName(DATABASE_DRIVER);
+   dataSource.setUrl(DATABASE_URL);
+   dataSource.setUsername(DATABASE_USERNAME);
+   dataSource.setPassword(DATABASE_PSWD);			
+   return dataSource;		
+}
+
+Bean 2 : Session Factory - post Db connection & configures appln to use Hibernate & create session object
+---------------------------------------------------------------------------------------------------------
+@Bean
+public SessionFactory getSessionFactory(DataSource dataSource) 
+{	
+   LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(dataSource);
+   builder.addProperties(getHibernateProperties());
+   builder.scanPackages("net.Ganesh.shoppingbackend.dto");
+   return builder.buildSessionFactory();
+}
+
+private Properties getHibernateProperties() 
+{	
+  Properties properties = new Properties();
+  properties.put("hibernate.dialect", DATABASE_DIALECT);
+  properties.put("hibernate.show_sql", "true");
+  properties.put("hibernate.format_sql", "true");	
+  return properties;
+}
+
+Bean 3 : HibernateTransactionManager - based on created session manages transaction
+-----------------------------------------------------------------------------------
+@Bean
+public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory)
+{
+   HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+   return transactionManager;		
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
