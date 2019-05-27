@@ -4,7 +4,7 @@
 		<!-- Display side bar -->
 		<div class="col-md-3">
 			<%@include file="./shared/sidebar.jsp"%></div>
-		
+
 		<!-- Display actual products -->
 		<div class="col-md-9">
 			<!-- Added bread crum -->
@@ -30,6 +30,23 @@
 				</div>
 			</div>
 
+			<div class="row">
+				<div class="col-xs-12">
+					<table id="tblProductList"
+						class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>Id</th>
+							
+								<th>Name</th>
+							</tr>
+						</thead>
+					</table>
+
+
+				</div>
+
+			</div>
 		</div>
 	</div>
 </div>

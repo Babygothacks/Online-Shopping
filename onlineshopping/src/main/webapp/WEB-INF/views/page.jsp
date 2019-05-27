@@ -33,6 +33,7 @@
  <link href="${css}/bootstrap-theme.css" rel="stylesheet">
 <%-- <link href="${css}/bootstrap_sandstone.css" rel="stylesheet"> --%>
 
+<link href="${css}/datatables.css" rel="stylesheet">
 
 </head>
 
@@ -64,8 +65,14 @@
 		<!-- JavaScript -->
 
 		<script src="${js}/jquery.js"></script>
+		
 		<script src="${js}/bootstrap.js"></script>
+		
+ 
+
+		<script src="${js}/jquery.dataTables.js"></script>
 		<script src="${js}/myapp.js"></script>
+		
 	</div>
 </body>
 
