@@ -19,13 +19,10 @@
 <title>Online Shopping - ${title}</title>
 <script>
 	window.Menu = '${title}';
+	window.contextRoot = '${contextRoot}';
 </script>
 <!-- Bootstrap core CSS -->
-
 <link href="${css}/bootstrap.css" rel="stylesheet">
-
-<!-- Add custom CSS here -->
-<link href="${css}/myapp.css" rel="stylesheet">
 
 <!-- Add boostrap new theme CSS here -->
 <%-- <link href="${css}/bootstrap-readable-theme.css" rel="stylesheet"> --%>
@@ -33,7 +30,10 @@
  <link href="${css}/bootstrap-theme.css" rel="stylesheet">
 <%-- <link href="${css}/bootstrap_sandstone.css" rel="stylesheet"> --%>
 
-<link href="${css}/datatables.css" rel="stylesheet">
+<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
+
+<!-- Add custom CSS here -->
+<link href="${css}/myapp.css" rel="stylesheet">
 
 </head>
 
@@ -65,14 +65,10 @@
 		<!-- JavaScript -->
 
 		<script src="${js}/jquery.js"></script>
-		
 		<script src="${js}/bootstrap.js"></script>
-		
- 
-
 		<script src="${js}/jquery.dataTables.js"></script>
+		<script src="${js}/dataTables.bootstrap.js"></script>
 		<script src="${js}/myapp.js"></script>
-		
 	</div>
 </body>
 
