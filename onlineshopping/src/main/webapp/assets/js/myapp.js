@@ -32,7 +32,7 @@ $(function() {
 		$table.DataTable({
 			lengthMenu : [ [ 3, 5, 10, -1 ],
 					[ "3 Records", "5 Records", "10 Records", "All" ] ],
-			pageLength : 10,
+			pageLength : 3,
 			ajax : {
 				url : jsonURL,
 				dataSrc : ''
@@ -52,8 +52,8 @@ $(function() {
 				{data : "id",
 					bSortable:false, 
 				mRender: function(data, type, row){
-					var str = '<a class="btn btn-primary"  href="' + window.contextRoot + '/show/'+data+'/products"><span class="glyphicon glyphicon-eye-open"></span></a> ';
-					str+= '<a class="btn btn-success"  href="' + window.contextRoot + '/cart/add/'+data+'/products"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
+					var str = '<a class="btn btn-primary"  href="' + window.contextRoot + '/show/'+data+'/product"><span class="glyphicon glyphicon-eye-open"></span></a> ';
+					str+= '<a class="btn btn-success"  href="' + window.contextRoot + '/cart/add/'+data+'/product"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
 					return str;
 				}	
 				},

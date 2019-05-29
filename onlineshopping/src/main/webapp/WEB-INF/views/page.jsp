@@ -58,6 +58,12 @@
 				test="${ProductsCategoryClick ==  true or AllProductsClick ==  true}">
 				<%@include file="./productlist.jsp"%>
 			</c:if>
+			
+			<c:if
+				test="${SingleProductClick ==  true}">
+				<%@include file="./singleproduct.jsp"%>
+			</c:if>
+			
 		</div>
 
 		<%@include file="./shared/footer.jsp"%>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import net.Ganesh.shoppingbackend.dao.IProductDAO;
 import net.Ganesh.shoppingbackend.dto.Product;
@@ -15,7 +16,7 @@ import net.Ganesh.shoppingbackend.dto.Product;
 @Controller
 @RequestMapping("/json/data")
 public class JsonDataController {
-	
+
 	@Autowired
 	private IProductDAO iproductDAO;
 
