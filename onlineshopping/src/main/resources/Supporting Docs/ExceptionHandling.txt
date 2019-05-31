@@ -1,0 +1,27 @@
+//Author - Ganesh
+
+Handling exception globally - 404 error/ or unknow url
+
+1.Create a new package called exception as same naming convension grpid.artifactid.projectname.packagename
+2.create a new class inside the package
+3.decorate the class with ControllerAdvice annotation & import respective dll
+4.create a function with annotation as @ExceptionHandler(NoHandlerFoundException.class) - to handle no handle exception
+5.create a error.jsp page
+6.chnage component scan package in dispatcher-sevlet.xml - give scope to exception package also
+7.to catch 404 exception in web.xml file add init param
+<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	
+----------------------------------------------------------------------------------
+
+Custom error Handling / user defined exception
+
+
+
+

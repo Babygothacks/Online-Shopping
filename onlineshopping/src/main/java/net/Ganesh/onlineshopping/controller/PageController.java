@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.Ganesh.onlineshopping.exception.ItemNotFoundException;
 import net.Ganesh.shoppingbackend.dao.CategoryDAO;
 import net.Ganesh.shoppingbackend.dao.IProductDAO;
 /*import net.Ganesh.shoppingbackend.daoimpl.CategoryDAOImpl;*/
@@ -80,11 +81,13 @@ public class PageController {
 	}
 
 	@RequestMapping(value = { "/show/category/{id}/products" })
-	public ModelAndView showCategoryProducts(@PathVariable("id") int id) {
+	public ModelAndView showCategoryProducts(@PathVariable("id") int id) throws ItemNotFoundException {
 		ModelAndView mv = new ModelAndView("page");
 
 		Category _category = null;
 		_category = categories.getCategory(id);
+		if (_category == null)
+			throw new ItemNotFoundException();
 
 		mv.addObject("title", _category.getName());
 		mv.addObject("categoryList", categories.list());
@@ -94,11 +97,12 @@ public class PageController {
 	}
 
 	@RequestMapping("/show/{id}/product")
-	public ModelAndView getSingleProductDetails(@PathVariable int id) {
+	public ModelAndView getSingleProductDetails(@PathVariable int id) throws ItemNotFoundException {
 		ModelAndView mv = new ModelAndView("page");
 		Product _product = null;
 		_product = iproductDAO.get(id);
-
+		if (_product == null)
+			throw new ItemNotFoundException();
 		_product.setViews(_product.getViews() + 1);
 		iproductDAO.update(_product);
 

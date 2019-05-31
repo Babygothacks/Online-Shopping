@@ -484,17 +484,6 @@ Generate toString method to check the values.
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
-3.8 Modify DAO impl class to add new category to database using hibernate
-
-
-
-
-
-
----------------------------------------------------------------------------------------------------------------------------------
-Part 4 - products
-
-Jquery dataTable plugins
 
 
 

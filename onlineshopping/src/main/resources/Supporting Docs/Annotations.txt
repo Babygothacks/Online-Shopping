@@ -17,3 +17,8 @@ private String imageURL;
 
 @JsonIgnore - ignores while binding as json
 private String description;
+
+
+@ControllerAdvice - every controller must get suggestion from this class
+
+@ExceptionHandler(NoHandlerFoundException.class) - to handle no handler found exceptiom - 404 error
