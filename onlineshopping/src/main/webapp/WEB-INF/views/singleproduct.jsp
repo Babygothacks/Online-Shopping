@@ -1,4 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container">
+
 	<div class="row">
 		<!-- Breadcrumb -->
 		<div class="col-lg-12">
@@ -40,17 +42,30 @@
 			</h4>
 			<hr>
 
-			<h6>Quantity : ${product.quantity}</h6>
-			<hr>
 
-			<div class="row">
-				<a href="${contextRoot}/cart/add/${product.id}/product"
-					class="btn btn-success"> <span
-					class="glyphicon glyphicon-shopping-cart"> Add to cart</span>
-				</a> <a href="${contextRoot}/show/all/products" class="btn btn-primary">
-					Back</span>
-				</a>
-			</div>
+			<c:choose>
+				<c:when test="${product.quantity == 0 or product.quantity == '0'}">
+					<h6>
+						Quantity : <span style="color: red">Out of stock!</span>
+					</h6>
+					<hr />
+
+					<a href="javascript:void(0);"
+						class="btn btn-success disabled"> <span
+						class="glyphicon glyphicon-shopping-cart" style="text-decoration: line-through"> Add to Cart</span>
+					</a>
+				</c:when>
+				<c:otherwise>
+					<h6>Quantity : ${product.quantity}</h6>
+					<hr />
+					<a href="${contextRoot}/cart/add/${product.id}/product"
+						class="btn btn-success"> <span
+						class="glyphicon glyphicon-shopping-cart"> Add to Cart</span>
+					</a>
+				</c:otherwise>
+			</c:choose>
+			<a href="${contextRoot}/show/all/products" class="btn btn-primary">
+				Back </a>
 
 		</div>
 	</div>

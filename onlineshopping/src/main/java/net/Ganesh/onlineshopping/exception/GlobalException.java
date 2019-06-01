@@ -47,13 +47,14 @@ public class GlobalException {
 
 		// print stack trace
 
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		ex.printStackTrace(pw);
+		/*
+		 * StringWriter sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw);
+		 * ex.printStackTrace(pw);
+		 * 
+		 * mv.addObject("errorDescription", sw.toString());
+		 */
 
-		mv.addObject("errorDescription", sw.toString());
-
-		mv.addObject("title", "Item unavailable");
+		mv.addObject("title", "error occurred");
 		return mv;
 	}
 

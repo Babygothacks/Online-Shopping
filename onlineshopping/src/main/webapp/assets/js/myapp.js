@@ -32,13 +32,14 @@ $(function() {
 		$table.DataTable({
 			lengthMenu : [ [ 3, 5, 10, -1 ],
 					[ "3 Records", "5 Records", "10 Records", "All" ] ],
-			pageLength : 3,
+			pageLength : 10,
 			ajax : {
 				url : jsonURL,
 				dataSrc : ''
 			},
 			columns: [	
 				{data: "code",
+					bSortable:false, 
 					mRender: function(data, type, row){
 						return '<image class="dataTableImg" src="' + window.contextRoot + '/resources/images/' + data + '.jpg" alt ="image is missing"/>';
 					}},
@@ -46,14 +47,28 @@ $(function() {
 				{data : "brand"},
 				{data : "unitPrice",
 					mRender : function(data, type, row){
-						return '&#8377; '+data;
+						//return '&#8377; '+data;
+						return '&#x20b9; ' +data;
 					}},
-				{data : "quantity"},
+				{data : "quantity",
+						mRender : function(data, type,row){
+							if(data < 1){
+								return '<span style="color:red">Out of Stock!</span>';
+							}
+							return data;
+						}},
 				{data : "id",
 					bSortable:false, 
 				mRender: function(data, type, row){
-					var str = '<a class="btn btn-primary"  href="' + window.contextRoot + '/show/'+data+'/product"><span class="glyphicon glyphicon-eye-open"></span></a> ';
-					str+= '<a class="btn btn-success"  href="' + window.contextRoot + '/cart/add/'+data+'/product"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
+					console.log(row['quantity']);
+					var str = "";
+					str += '<a class="btn btn-primary"  href="' + window.contextRoot + '/show/'+data+'/product"><span class="glyphicon glyphicon-eye-open"></span></a> ';
+					if(row['quantity'] == 0 || row['quantity'] == '0'){
+						str+= '<a class="btn btn-success disabled"  href="' + window.contextRoot + '/cart/add/'+data+'/product"><span class="glyphicon glyphicon-shopping-cart"></span></a>';	
+					}
+					else{
+						str+= '<a class="btn btn-success"  href="' + window.contextRoot + '/cart/add/'+data+'/product"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
+					}		
 					return str;
 				}	
 				},
